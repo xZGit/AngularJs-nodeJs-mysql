@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html ng-app="trial" lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!--jQuery-->
+    <script type="text/javascript"  src="lib/jquery/jquery.js"></script>
+
+
+    <!-- Bootstrap-->
+    <script type="text/javascript"  src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css">
+    <!-- Bootstrap-->
+
+    <!--angular-->
+    <script type="text/javascript" src="lib/angular-1.2.5/angular.min.js"></script>
+    <!--<script type="text/javascript" src="lib/angular-1.2.5/angular-route.min.js"></script>-->
+    <script type="text/javascript" src="lib/angular-1.2.5/angular-resource.min.js"></script>
+    <!--angular-->
+
+
+    <script type="text/javascript" src="js/Controller.js"></script>
+
+
+</head>
+<body ng-controller="TrialController">
+<span class="label label-{{actionStatus}}">{{actionStatusMsg}}</span><BR/>
+
+<div style="text-align: right; margin-right: 2px">
+<a href="#userMgr"
+   role="button"
+   class="btn"
+   ng-mouseover="editUser()"
+   data-toggle="modal">创建新用户</a>
+</div>
+
+<table class="table table-striped table-condensed table-bordered table-hover">
+  <thead>
+  <tr style="background-color: #0081c2; color: #FFFFFF">
+    <td>编号</td><td>姓名</td><td>口令</td><td>角色</td><td>组</td><td>状态</td><td>操作</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="user in users">
+    <td>{{user.u_id}}</td>
+
+    <td>
+      <a ng-mouseover="editUser(user)"
+         href="#userMgr"
+         data-toggle="modal">
+        {{user.u_name}}
+      </a>
+    </td>
+
+    <td>{{user.cert}}</td>
+    <td>{{user.role_id}}</td>
+    <td>{{user.grp_id}}</td>
+    <td>{{user.status}}</td>
+    <td><a ng-click="deleteUser(user)">删除</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<div id="userMgr" class="modal hide fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="userMgrLabel"
+     aria-hidden="true">
+
+  <div class="modal-header">
+    <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-hidden="true">x</button>
+    <h3 id="userMgrLabel">{{userMgrTitle}}</h3>
+  </div>
+  <div class="modal-body">
+
+    <form name="userInfo" class="form-horizontal css-form">
+      <div class="control-group" ng-show="user.u_id != null">
+        <label class="control-label" for="u_id">用户编号</label>
+        <div class="controls">
+          <input type="text" ng-disabled="true" ng-model="user.u_id" id="u_id"  placeholder="用户编号" />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="u_name">名称</label>
+        <div class="controls">
+          <input required="true" type="text" ng-model="user.u_name" id="u_name"  placeholder="用户名称">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="u_cert">口令</label>
+        <div class="controls">
+          <input required="true" type="text" ng-model="user.cert" id="u_cert"  placeholder="登录口令">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="u_grp">用户组</label>
+        <div class="controls">
+          <input required="true" type="text" ng-model="user.grp_id" id="u_grp"  placeholder="用户组">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="u_role">用户角色</label>
+        <div class="controls">
+          <input required="true" type="text" ng-model="user.role_id" id="u_role"  placeholder="用户角色">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="u_status">帐号状态</label>
+        <div class="controls">
+          <input type="text" ng-model="user.status" id="u_status"  placeholder="帐号状态">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+    <button class="btn btn-primary"
+            data-dismiss="modal"
+            aria-hidden="true"
+            ng-click="updateUser()"
+            ng-disabled="userInfo.$invalid">保存</button>
+  </div>
+</div>
+
+</body>
+</html>
