@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created with IntelliJ IDEA.
  * User: xx
  * Date: 14-7-10
@@ -8,8 +8,7 @@
 
 var fs = require('fs');
 var logger = require('./logger');
-logger.logClass = "fileUpload";
-logger.user = "xx";
+
 exports.saveFile = function (req, res) {
 
     console.log(req.body);

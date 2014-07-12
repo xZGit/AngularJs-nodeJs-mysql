@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by xx on 14-7-7.
  */
 
@@ -12,8 +12,7 @@ var logger = exports;
 var timeFormat = "yyyy/MM/dd hh:mm:ss";
 var debugLevel = 'debug';
 
-logger.user = "developer";
-logger.logClass = "logger";
+
 
 var logFile = "./logfile.log";
 
@@ -28,7 +27,7 @@ var log = function (level, message) {
         }
 
 
-        var msg = forMatTime(timeFormat) + " " + logger.logClass + ".js " + logger.user + " [" + level + '] : ' + message;
+        var msg = forMatTime(timeFormat) + " " + " [" + level + '] : ' + message;
 
         console.log(msg);
 

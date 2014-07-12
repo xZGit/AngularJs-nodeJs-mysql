@@ -6,8 +6,7 @@
 var common = require('./common');
 var logger = require('./logger');
 var until = require('./until');
-logger.logClass = "user";
-logger.user = "xx";
+
 
 var numReg = "^[0-9]*[1-9][0-9]*$";
 
