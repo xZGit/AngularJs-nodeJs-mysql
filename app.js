@@ -6,6 +6,8 @@ var express = require('express');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
 
 var config = require('./config.js');
 
@@ -63,9 +65,26 @@ app.post('/user', user.userServ);
 
 app.use(app.router);
 
-http.createServer(app).listen(app.get('port'), function () {
+//cpu max work
+if (cluster.isMaster) {
+    // Fork workers. fock num of CPUS - 1 works
+    for (var i = 1; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    cluster.on('exit', function(worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' died');
+    });
+    cluster.on('fork', function(worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' is online');
+    });
+} else {
+    // Workers can share any TCP connection
+    // In this case its a HTTP server
+    http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+}
 
 
 module.exports = app;
